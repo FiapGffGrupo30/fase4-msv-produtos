@@ -3,6 +3,7 @@ package br.fiap.gff.product.controllers;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,7 +27,7 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Product> findById(Long id) {
+    public ResponseEntity<Product> findById(@PathVariable Long id) {
         return ResponseEntity.ok(useCase.findById(id));
     }
 
@@ -39,14 +40,14 @@ public class ProductController {
                 .body(createdProduct);
     }
 
-    @PutMapping()
-    public ResponseEntity<Product> update(Long id, RequestProductDTO dto) {
+    @PutMapping("/{id}")
+    public ResponseEntity<Product> update(@PathVariable Long id, RequestProductDTO dto) {
         Product updatedProduct = useCase.update(id, dto);
         return ResponseEntity.ok(updatedProduct);
     }
 
-    @DeleteMapping()
-    public ResponseEntity<Void> deleteById(Long id) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteById(@PathVariable Long id) {
         useCase.deleteById(id);
         return ResponseEntity.noContent().build();
     }
